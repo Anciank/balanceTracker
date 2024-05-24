@@ -4,18 +4,20 @@ import { createRecord } from "@/services/actions";
 import { useRef } from "react";
 
 export default function AddBalance() {
-  const ref = useRef(null);
+  const ref = useRef<HTMLFormElement>(null);
 
   async function formHandler(event: React.FormEvent) {
-    event.preventDefault;
-    const formData = new FormData(ref.current);
-    await createRecord(formData);
-    ref.current.reset();
+    event.preventDefault();
+    if (ref.current) {
+      const formData = new FormData(ref.current);
+      await createRecord(formData);
+      ref.current.reset();
+    }
   }
 
   return (
     <div className="">
-      <form ref={ref} action={formHandler} className="flex flex-col justify-center">
+      <form ref={ref} onSubmit={formHandler} className="flex flex-col justify-center">
         <input
           className="bg-slate-600 py-2 px-3 text-xl"
           name="amount"
