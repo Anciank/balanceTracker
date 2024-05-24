@@ -1,5 +1,5 @@
 export interface Record {
   id: number;
-  num: number;
+  amountInCents: number;
   time: Date;
 }

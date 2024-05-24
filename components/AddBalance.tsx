@@ -15,14 +15,16 @@ export default function AddBalance() {
 
   return (
     <div className="">
-      <form ref={ref} action={formHandler} className="flex flex-col">
+      <form ref={ref} action={formHandler} className="flex flex-col justify-center">
         <input
-          className="bg-slate-600 "
-          name="num"
-          type="text"
+          className="bg-slate-600 py-2 px-3 text-xl"
+          name="amount"
+          type="number"
           placeholder="Add Balance Record"
+          autoComplete="off"
+          autoFocus
         />
-        <button type="submit" className="bg-blue-800 w-full">
+        <button type="submit" className="bg-blue-800 w-full hover:bg-blue-950 text-white py-1 text-xl">
           Add
         </button>
       </form>
