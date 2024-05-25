@@ -16,7 +16,7 @@ const Header = () => {
   }, []); // Empty dependency array ensures that the effect runs only once
 
   return (
-    <div className="text-center">
+    <div className="flex justify-center">
       <h1
         suppressHydrationWarning
         className="text-8xl mt-24 dm-serif-text-regular w-96 "

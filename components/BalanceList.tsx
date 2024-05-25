@@ -1,10 +1,9 @@
 import { deleteRecord, getRecords } from "@/services/actions";
 import DeleteButton from "./DeleteButton";
+import { QueryResultRow } from "@vercel/postgres";
+import { Record } from "@/services/definitinons";
 
-export default async function BalanceList() {
-  const data = await getRecords();
-  //data is a list, foreach data item, parse the item.time 2024-05-24T03:09:35.766Z and order by it
-
+export default async function BalanceList({ data } : { data: Record[]}) {
   return (
     <>
       <ul className="flex flex-col justify-center gap-2 mt-2">
@@ -13,7 +12,7 @@ export default async function BalanceList() {
             className="flex justify-between border-solid border-blue-800 border-2 items-center"
             key={item.id}
           >
-            <p className="ml-3 cormorant-garamond-semibold text-xl">{(item.amountincents / 100).toString()} ¥</p>
+            <p className="ml-3 cormorant-garamond-semibold text-xl">{(item.amountInCents)} ¥</p>
             <DeleteButton id={item.id} />
           </li>
         ))}

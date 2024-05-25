@@ -2,13 +2,26 @@
 
 import { revalidatePath, unstable_noStore } from "next/cache";
 import { Record } from "./definitinons";
-import { sql } from "@vercel/postgres";
-import { redirect } from "next/dist/server/api-utils";
+import { QueryResultRow, sql } from "@vercel/postgres";
+import { redirect } from "next/navigation";
 
 export async function createRecord(formData: FormData) {
   console.log(formData);
 
-  const amountInCents = Number(formData.get("amount")) * 100;
+  // Function to safely evaluate a mathematical expression
+  const evaluateExpression = (expression: string) => {
+    try {
+      // Use the Function constructor to create a function from the expression
+      const fn = new Function(`return ${expression}`);
+      // Call the function to evaluate the expression
+      return fn();
+    } catch (error) {
+      console.error("Error evaluating expression:", error);
+      return null; // Return null or handle the error as needed
+    }
+  };
+  const toEval = formData.get("amount")?.toString();
+  const amountInCents = toEval ? Number(evaluateExpression(toEval)) * 100 : 0;
 
   try {
     await sql`
@@ -18,7 +31,7 @@ export async function createRecord(formData: FormData) {
     `;
   } catch (error) {
     return {
-      message: 'Database Error: Failed to create record.',
+      message: "Database Error: Failed to create record.",
     };
   }
 
@@ -30,12 +43,24 @@ export async function getRecords() {
 
   try {
     const records = await sql`
-      SELECT * FROM RECORDS ORDER BY time ASC;
-    `
+      SELECT * FROM RECORDS ORDER BY time DESC;
+    `;
 
-    console.log("Records fetched."); 
-    console.log(records.rows);
-    return records.rows;
+    console.log("Records fetched.");
+
+    const rt: Record[] = records.rows.map((item) => {
+      
+      return {
+        id: item.id as string,
+        amountInCents: item.amountincents / 100 as number,
+        time: new Date(item.time),
+      };
+    });
+
+    console.log(rt);
+    
+
+    return rt;
   } catch (error) {
     console.error("Fetch records failed: ", error);
     throw error;
@@ -45,14 +70,14 @@ export async function getRecords() {
 export async function deleteRecord(id: string) {
   try {
     console.log("uuid is : " + id);
-    
-    await sql`DELETE FROM RECORDS WHERE id=${id};`
 
-    console.log("Records deleted."); 
+    await sql`DELETE FROM RECORDS WHERE id=${id};`;
+
+    console.log("Records deleted.");
   } catch (error) {
     console.error("Fetch records failed: ", error);
     throw error;
   }
 
-  revalidatePath('/');
+  revalidatePath("/");
 }
