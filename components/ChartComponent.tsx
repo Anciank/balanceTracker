@@ -30,6 +30,7 @@ const ChartComponent: React.FC<Props> = ({ data }) => {
               year: 'numeric',
               month: 'short',
               day: 'numeric',
+              timeZone: "Asia/Singapore"
             })
           ),
           datasets: [
