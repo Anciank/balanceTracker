@@ -1,7 +1,7 @@
 import DeleteButton from "./DeleteButton";
 import { Record } from "@/services/definitions";
 
-export default async function BalanceList({ data } : { data: Record[]}) {
+export default async function BalanceList({ data }: { data: Record[] }) {
   return (
     <>
       <ul className="flex flex-col justify-center gap-2 mt-2">
@@ -10,7 +10,16 @@ export default async function BalanceList({ data } : { data: Record[]}) {
             className="flex justify-between border-solid border-blue-800 border-2 items-center"
             key={item.id}
           >
-            <p className="ml-3 cormorant-garamond-semibold text-xl">{(item.amountInCents)} ¥</p>
+            <p className="ml-3 cormorant-garamond-semibold text-xl">
+              {item.amountInCents} ¥
+            </p>
+            <p className="cormorant-garamond-semibold text-xl">
+              {item.time.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })}
+            </p>
             <DeleteButton id={item.id} />
           </li>
         ))}

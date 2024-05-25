@@ -35,7 +35,7 @@ const ChartComponent: React.FC<Props> = ({ data }) => {
           datasets: [
             {
               label: 'Amount',
-              data: data.slice().map((item) => {
+              data: data.map((item) => {
                 console.log(item.amountInCents);
                 return item.amountInCents;
             }),
