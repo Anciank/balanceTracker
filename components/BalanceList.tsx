@@ -1,7 +1,5 @@
-import { deleteRecord, getRecords } from "@/services/actions";
 import DeleteButton from "./DeleteButton";
-import { QueryResultRow } from "@vercel/postgres";
-import { Record } from "@/services/definitinons";
+import { Record } from "@/services/definitions";
 
 export default async function BalanceList({ data } : { data: Record[]}) {
   return (

@@ -1,9 +1,8 @@
 "use server";
 
 import { revalidatePath, unstable_noStore } from "next/cache";
-import { Record } from "./definitinons";
+import { Record } from "./definitions";
 import { QueryResultRow, sql } from "@vercel/postgres";
-import { redirect } from "next/navigation";
 
 export async function createRecord(formData: FormData) {
   console.log(formData);

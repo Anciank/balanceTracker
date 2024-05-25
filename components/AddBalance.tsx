@@ -24,7 +24,6 @@ export default function AddBalance() {
         <input
           className="bg-slate-600 py-2 px-3 text-xl"
           name="amount"
-          // type="number"
           placeholder="Add Balance Record"
           autoComplete="off"
           autoFocus
