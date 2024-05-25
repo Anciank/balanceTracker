@@ -56,7 +56,9 @@ const ChartComponent: React.FC<Props> = ({ data }) => {
     };
   }, [data]);
 
-  return <canvas ref={canvasRef} id="chart" style={{ width: '576px' }} />;
+  return <div className='relative chartContainer'>
+    <canvas ref={canvasRef} id="chart"/>
+  </div>;
 };
 
 export default ChartComponent;

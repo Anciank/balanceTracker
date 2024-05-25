@@ -19,7 +19,7 @@ const Header = () => {
     <div className="flex justify-center">
       <h1
         suppressHydrationWarning
-        className="text-8xl mt-24 dm-serif-text-regular w-96 "
+        className="text-8xl mt-12 dm-serif-text-regular w-96 text-center"
       >
         {time.toLocaleTimeString([], { hour12: false })}
       </h1>

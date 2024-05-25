@@ -19,7 +19,7 @@ export default function AddBalance() {
   }
 
   return (
-    <div className="">
+    <div className="mt-4">
       <form ref={ref} onSubmit={formHandler} className="flex flex-col justify-center">
         <input
           className="bg-slate-600 py-2 px-3 text-xl"
@@ -29,7 +29,7 @@ export default function AddBalance() {
           autoFocus
           pattern="^[0-9+\-*\/\s]*$"
         />
-        <button type="submit" className="bg-blue-800 w-full hover:bg-blue-950 text-white py-1 text-xl" disabled={pending}>
+        <button type="submit" className="bg-blue-800 w-full hover:bg-blue-950 text-white py-1 text-xl mt-2" disabled={pending}>
           {pending ? 'Adding' : 'Add'}
         </button>
       </form>
