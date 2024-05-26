@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
-import Chart from 'chart.js/auto';
-import { Record } from '@/services/definitions';
+import { useEffect, useRef } from "react";
+import Chart from "chart.js/auto";
+import { Record, formatDate } from "@/services/definitions";
 
 interface Props {
   data: Record[];
@@ -13,7 +13,7 @@ const ChartComponent: React.FC<Props> = ({ data }) => {
   const chartRef = useRef<Chart | null>(null);
 
   useEffect(() => {
-    const ctx = canvasRef.current?.getContext('2d');
+    const ctx = canvasRef.current?.getContext("2d");
 
     if (ctx && data.length > 0) {
       // Destroy the previous chart instance if it exists
@@ -23,25 +23,16 @@ const ChartComponent: React.FC<Props> = ({ data }) => {
 
       // Create a new chart instance
       chartRef.current = new Chart(ctx, {
-        type: 'line',
+        type: "line",
         data: {
-          labels: data.reverse().map((item) =>
-            item.time.toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'short',
-              day: 'numeric',
-              timeZone: "Asia/Singapore"
-            })
+          labels: data.reverse().map((item) => formatDate(item.time)
           ),
           datasets: [
             {
-              label: 'Amount',
-              data: data.map((item) => {
-                console.log(item.amountInCents);
-                return item.amountInCents;
-            }),
-              borderColor: 'blue',
-              backgroundColor: 'rgba(0, 0, 255, 0.1)',
+              label: "Amount",
+              data: data.map((item) => item.amountInCents),
+              borderColor: "blue",
+              backgroundColor: "rgba(0, 0, 255, 0.1)",
             },
           ],
         },
@@ -57,9 +48,11 @@ const ChartComponent: React.FC<Props> = ({ data }) => {
     };
   }, [data]);
 
-  return <div className='relative chartContainer'>
-    <canvas ref={canvasRef} id="chart"/>
-  </div>;
+  return (
+    <div className="relative chartContainer">
+      <canvas ref={canvasRef} id="chart" />
+    </div>
+  );
 };
 
 export default ChartComponent;

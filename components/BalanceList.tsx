@@ -1,5 +1,5 @@
 import DeleteButton from "./DeleteButton";
-import { Record } from "@/services/definitions";
+import { Record, formatDate } from "@/services/definitions";
 
 export default async function BalanceList({ data }: { data: Record[] }) {
   return (
@@ -14,11 +14,7 @@ export default async function BalanceList({ data }: { data: Record[] }) {
               {item.amountInCents} ¥
             </p>
             <p className="cormorant-garamond-semibold text-xl">
-              {item.time.toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-              })}
+              {formatDate(item.time)}
             </p>
             <DeleteButton id={item.id} />
           </li>
