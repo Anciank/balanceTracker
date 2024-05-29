@@ -1,3 +1,4 @@
+import { Card, CardBody } from "@nextui-org/react";
 import DeleteButton from "./DeleteButton";
 import { Record, formatDate } from "@/services/definitions";
 
@@ -7,9 +8,11 @@ export default async function BalanceList({ data }: { data: Record[] }) {
       <ul className="flex flex-col justify-center gap-2 mt-2">
         {data.map((item) => (
           <li
-            className="flex justify-between border-solid border-blue-800 border-2 items-center"
             key={item.id}
           >
+            <Card shadow="lg">
+            <CardBody className="flex flex-row justify-between items-baseline">
+
             <p className="ml-3 cormorant-garamond-semibold text-xl">
               {item.amountInCents} ¥
             </p>
@@ -17,6 +20,8 @@ export default async function BalanceList({ data }: { data: Record[] }) {
               {formatDate(item.time)}
             </p>
             <DeleteButton id={item.id} />
+            </CardBody>
+            </Card>
           </li>
         ))}
       </ul>

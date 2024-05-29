@@ -1,37 +1,58 @@
 "use client";
 
 import { createRecord } from "@/services/actions";
+import { Button } from "@nextui-org/button";
+import { Input } from "@nextui-org/react";
 import { useRef, useState } from "react";
 
 export default function AddBalance() {
   const [pending, setPending] = useState(false);
   const ref = useRef<HTMLFormElement>(null);
 
-  async function formHandler(event: React.FormEvent) {
-    event.preventDefault();
-    setPending(true);
+  async function formAction(event: React.FormEvent) {
+    event.preventDefault(); // Prevent the default form submission
     if (ref.current) {
       const formData = new FormData(ref.current);
-      await createRecord(formData);
-      ref.current.reset();
+      setPending(true);
+
+      try {
+        if (formData) {
+          await createRecord(formData);
+        }
+        if (ref.current) {
+          ref.current.reset();
+        }
+      } catch (error) {
+        console.error("Error creating record:", error);
+      } finally {
+        setPending(false);
+      }
     }
-    setPending(false);
   }
 
   return (
     <div className="mt-4">
-      <form ref={ref} onSubmit={formHandler} className="flex flex-col justify-center">
-        <input
-          className="bg-slate-600 py-2 px-3 text-xl"
+      <form
+        ref={ref}
+        onSubmit={formAction}
+        className="flex flex-col justify-center gap-2"
+      >
+        <Input
           name="amount"
-          placeholder="Add Balance Record"
-          autoComplete="off"
+          label="Price"
+          placeholder="0.00"
+          labelPlacement="inside"
+          endContent={
+            <div className="pointer-events-none flex items-center">
+              <span className="text-default-400 text-small">¥</span>
+            </div>
+          }
           autoFocus
           pattern="^[0-9+\-*\/\s]*$"
         />
-        <button type="submit" className="bg-blue-800 w-full hover:bg-blue-950 text-white py-1 text-xl mt-2" disabled={pending}>
-          {pending ? 'Adding' : 'Add'}
-        </button>
+        <Button color="primary" radius="sm" isLoading={pending} type="submit">
+          {pending ? "Adding" : "Add"}
+        </Button>
       </form>
     </div>
   );

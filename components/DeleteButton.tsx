@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { deleteRecord } from '@/services/actions';
+import { Button } from '@nextui-org/button';
 
 interface DeleteButtonProps {
   id: string;
@@ -23,9 +24,9 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ id }) => {
   };
 
   return (
-    <button className='bg-blue-800 p-2 hover:bg-blue-950 text-white' onClick={handleDelete} disabled={isDeleting}>
+    <Button color='primary' onClick={handleDelete} disabled={isDeleting}>
       {isDeleting ? 'Deleting...' : 'Delete'}
-    </button>
+    </Button>
   );
 };
 
